@@ -7,10 +7,10 @@
   >
     <v-row class="px-4 py-1 actions">
       <v-btn text icon>
-        <v-icon class="primary--text">mdi-pencil</v-icon>
+        <v-icon @click="editHandle" class="primary--text">mdi-pencil</v-icon>
       </v-btn>
       <v-btn text icon>
-        <v-icon class="primary--text">mdi-close</v-icon>
+        <v-icon @click="removeHandle" class="primary--text">mdi-close</v-icon>
       </v-btn>
     </v-row>
 
@@ -43,6 +43,15 @@ export default {
   },
   props: {
     objective: Object
+  },
+  methods: {
+    editHandle() {
+      this.$emit('editObjective', this.objective)
+    },
+    removeHandle() {
+      this.$emit('removeObjective', this.objective)
+    }
+
   }
 }
 </script>
