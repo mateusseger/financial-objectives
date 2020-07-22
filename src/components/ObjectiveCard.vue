@@ -13,7 +13,6 @@
         <v-icon @click="removeHandle" class="primary--text">mdi-close</v-icon>
       </v-btn>
     </v-row>
-
     <v-row align="center" class="px-12 py-4">
       <v-progress-circular
         rotate="90"

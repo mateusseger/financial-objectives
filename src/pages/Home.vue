@@ -5,8 +5,8 @@
         <v-row justify="start" align="start">
           <OjectiveCard v-for="objective in objectives" :key="objective.id"
             :objective="objective" 
-            @editObjective="editObjective" />
-
+            @editObjective="editObjective"
+            @removeObjective="removeObjective" />
         </v-row>
       </v-col>
     </v-row>
@@ -20,13 +20,14 @@
     >
       <v-icon>mdi-plus</v-icon>
     </v-btn>
-    <NewObjective v-model="dialog" :selectedObjective="selectedObjective"/>
+    <NewObjective v-model="dialog" :selectedObjective="selectedObjective" @refresh="listObjectives"/>
   </v-container>
 </template>
 
 <script>
 import OjectiveCard from '@/components/ObjectiveCard'
 import NewObjective from '@/components/NewObjective'
+import database from '@/services/database'
 
 export default {
   components: {
@@ -36,53 +37,12 @@ export default {
   data() {
     return {
       dialog: false,
-      objectives: [
-        {
-          id: 1,
-          name: "Fundo de emergências",
-          currentValue: 500,
-          percentage: 80
-        },
-        {
-          id: 2,
-          name: "Fundo de emergências",
-          currentValue: 500,
-          percentage: 50
-        },
-        {
-          id: 3,
-          name: "Fundo de emergências",
-          currentValue: 500,
-          percentage: 50
-        },
-        {
-          id: 4,
-          name: "Fundo de emergências",
-          currentValue: 500,
-          percentage: 50
-        },
-        {
-          id: 5,
-          name: "Fundo de emergências",
-          currentValue: 500,
-          percentage: 50
-        },
-        {
-          id: 6,
-          name: "Fundo de emergências",
-          currentValue: 500,
-          percentage: 50
-        },
-        {
-          id: 7,
-          name: "Fundo de emergências",
-          currentValue: 500,
-          percentage: 50
-        },
-        
-      ],
+      objectives: [],
       selectedObjective: null
     }
+  },
+  created() {
+    this.listObjectives()
   },
   methods: {
     editObjective(obj) {
@@ -92,6 +52,15 @@ export default {
     newObjective() {
       this.selectedObjective = null
       this.dialog = true
+    },
+    listObjectives() {
+      database.listObjectives().then(response => {
+        this.objectives = response
+      })
+    },
+    async removeObjective(objective) {
+      await database.removeObjective(objective.id)
+      this.listObjectives()
     }
   },
 }

@@ -10,6 +10,7 @@
   "dependencies": {
     "accounting": "^0.4.1",
     "core-js": "^3.6.5",
+    "firebase": "^7.16.1",
     "v-currency-field": "^3.0.11",
     "vue": "^2.6.11",
     "vuetify": "^2.2.11"
